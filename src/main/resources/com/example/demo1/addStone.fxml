@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<?import javafx.geometry.Insets?>
+<VBox alignment="CENTER" spacing="10.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.demo1.AddStoneController">
+    <padding>
+        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+    </padding>
+
+    <Label text="Название камня:"/>
+    <TextField fx:id="nameField"/>
+
+    <Label text="Вес камня:"/>
+    <TextField fx:id="weightField"/>
+
+    <Label text="Прозрачность камня:"/>
+    <TextField fx:id="transparencyField"/>
+
+    <Label text="Ценность камня:"/>
+    <TextField fx:id="valueField"/>
+
+    <Button text="Добавить камень" onAction="#addStone"/>
+</VBox>
