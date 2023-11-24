@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.net.URL;
@@ -39,12 +40,59 @@ public class NecklaceController {
 
     @FXML
     void createNecklace(ActionEvent event) {
+        String weightText = weightField.getText();
 
+        if (weightText.isEmpty()) {
+            showAlert("Ошибка", "Введите вес ожерелья", Alert.AlertType.ERROR);
+        } else {
+            try {
+                double weight = Double.parseDouble(weightText);
+
+                if (weight <= 0) {
+                    showAlert("Ошибка", "Введите положительное значение веса ожерелья", Alert.AlertType.ERROR);
+                } else {
+                    // Логика создания ожерелья
+                    // ...
+                }
+            } catch (NumberFormatException e) {
+                showAlert("Ошибка", "Некорректный формат числа", Alert.AlertType.ERROR);
+            }
+        }
     }
 
+    private void showAlert(String title, String content, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
     @FXML
     void findStonesByTransparency(ActionEvent event) {
+        String maxText = transparencyMaxField.getText();
+        String minText = transparencyMinField.getText();
 
+// Проверка на ввод и валидация диапазона прозрачности
+        if (maxText.isEmpty() || minText.isEmpty()) {
+            showAlert("Ошибка", "Заполните оба поля диапазона", Alert.AlertType.ERROR);
+        } else {
+            try {
+                int maxTransparency = Integer.parseInt(maxText);
+                int minTransparency = Integer.parseInt(minText);
+
+                if (maxTransparency < 0 || minTransparency < 0) {
+                    showAlert("Ошибка", "Введите положительные значения", Alert.AlertType.ERROR);
+                } else if (maxTransparency < minTransparency) {
+                    showAlert("Ошибка", "Максимальное значение должно быть больше или равно минимальному", Alert.AlertType.ERROR);
+                } else {
+//                    transparencyErrorLabel.setText("");
+                    // Логика поиска камней по заданному диапазону прозрачности
+                    // ...
+                }
+            } catch (NumberFormatException e) {
+                showAlert("Ошибка", "Некорректный формат числа", Alert.AlertType.ERROR);
+            }
+        }
     }
 
 
@@ -79,6 +127,9 @@ public class NecklaceController {
         stage.showAndWait();
     }
     public void initialize() {
+
+
+
         // Пример условия для определения видимости кнопки
         condition.set(true);
 
