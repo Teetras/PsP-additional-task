@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-
 <?import javafx.geometry.Insets?>
-<VBox alignment="CENTER" spacing="10.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.demo1.AddStoneController">
-    <padding>
-        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
-    </padding>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
-    <Label text="Название камня:"/>
-    <TextField fx:id="nameField"/>
 
-    <Label text="Вес камня:"/>
-    <TextField fx:id="weightField"/>
-
-    <Label text="Прозрачность камня:"/>
-    <TextField fx:id="transparencyField"/>
-
-    <Label text="Ценность камня:"/>
-    <TextField fx:id="valueField"/>
-
-    <Button text="Добавить камень" onAction="#addStone"/>
-</VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.AddStoneController">
+   <children>
+      <AnchorPane>
+         <children>
+            <Pane layoutX="956.0" prefHeight="39.0" prefWidth="44.0" style="-fx-background-color: #8984b0;" />
+            <Pane prefHeight="39.0" prefWidth="44.0" style="-fx-background-color: #8984b0;" />
+            <Pane layoutY="661.0" prefHeight="39.0" prefWidth="44.0" style="-fx-background-color: #8984b0;" />
+            <Pane layoutX="956.0" layoutY="661.0" prefHeight="39.0" prefWidth="44.0" style="-fx-background-color: #8984b0;" />
+            <Pane layoutX="204.0" layoutY="105.0" prefHeight="490.0" prefWidth="593.0" style="-fx-background-color: #9f9cb5; -fx-border-radius: 50;">
+               <children>
+                  <VBox alignment="CENTER" layoutX="139.0" layoutY="21.0" prefHeight="449.0" prefWidth="316.0" spacing="10.0">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                     <children>
+                        <Label text="Название камня:" />
+                        <TextField fx:id="nameField" />
+                        <Label text="Вес камня:" />
+                        <TextField fx:id="weightField1" />
+                        <Label text="Прозрачность камня:" />
+                        <TextField fx:id="transparencyField" />
+                        <Label text="Ценность камня:" />
+                        <TextField fx:id="valueField" />
+                        <Button onAction="#addStone" text="Добавить камень" />
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
