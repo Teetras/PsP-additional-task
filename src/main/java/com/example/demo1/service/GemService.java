@@ -1,9 +1,9 @@
-package com.example.dao;
+package com.example.demo1.service;
+import com.example.demo1.entity.Gem;
 
 import java.util.List;
-import com.example.entity.Gem;
 
-public interface GemDao {
+public interface GemService {
     boolean addGem(Gem gem);
     boolean updateGem(Gem gem);
     boolean deleteGem(int id);

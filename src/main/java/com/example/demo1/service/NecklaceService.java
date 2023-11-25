@@ -1,10 +1,10 @@
-package com.example.dao;
+package com.example.demo1.service;
 
-import com.example.entity.Necklace;
+import com.example.demo1.entity.Necklace;
 
 import java.util.List;
 
-public interface NecklaceDao {
+public interface NecklaceService {
     boolean addNecklace(Necklace necklace);
     boolean updateNecklace(Necklace necklace);
     boolean deleteNecklace(int id);

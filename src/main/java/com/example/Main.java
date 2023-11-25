@@ -1,9 +1,9 @@
 package com.example;
 
 
-import com.example.entity.User;
-import com.example.service.UserService;
-import com.example.service.serviceImpl.UserServiceImpl;
+import com.example.demo1.entity.User;
+import com.example.demo1.service.UserService;
+import com.example.demo1.service.serviceImpl.UserServiceImpl;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

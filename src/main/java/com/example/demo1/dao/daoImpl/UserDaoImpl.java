@@ -1,22 +1,15 @@
-package com.example.dao.daoImpl;
+package com.example.demo1.dao.daoImpl;
 
-import com.example.entity.User;
-import com.example.dao.UserDao;
+import com.example.demo1.dao.UserDao;
+import com.example.demo1.entity.User;
+import com.example.demo1.sessionFactory.SessionFactoryImpl;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import lombok.NoArgsConstructor;
-
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.util.List;
-
-import com.example.sessionFactory.SessionFactoryImpl;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 @NoArgsConstructor
@@ -86,8 +79,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> showUser() {
-        List<User> user = (List<User>)SessionFactoryImpl.getSessionFactory().openSession().createQuery("FROM User").list();
-        return user;
+//        List<User> user = (List<User>)SessionFactoryImpl.getSessionFactory().openSession().createQuery().list();
+     return null;
     }
 
     @Override
