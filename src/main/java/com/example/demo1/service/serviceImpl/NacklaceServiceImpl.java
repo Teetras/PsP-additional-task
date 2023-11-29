@@ -1,12 +1,10 @@
-package com.example.service.serviceImpl;
+package com.example.demo1.service.serviceImpl;
 
 
-import com.example.dao.NecklaceDao;
-import com.example.dao.daoImpl.NecklaceDaoImpl;
-import com.example.entity.Necklace;
-import com.example.entity.Necklace;
-import com.example.service.NecklaceService;
-import com.example.service.NecklaceService;
+import com.example.demo1.dao.NecklaceDao;
+import com.example.demo1.dao.daoImpl.NecklaceDaoImpl;
+import com.example.demo1.entity.Necklace;
+import com.example.demo1.service.NecklaceService;
 import lombok.NoArgsConstructor;
 import org.hibernate.HibernateError;
 

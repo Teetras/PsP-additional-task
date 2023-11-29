@@ -1,12 +1,11 @@
-package com.example.service.serviceImpl;
+package com.example.demo1.service.serviceImpl;
 
 
-import com.example.dao.GemDao;
-import com.example.dao.daoImpl.GemDaoImpl;
-import com.example.entity.Gem;
-import com.example.service.GemService;
+import com.example.demo1.dao.GemDao;
+import com.example.demo1.dao.daoImpl.GemDaoImpl;
+import com.example.demo1.entity.Gem;
+import com.example.demo1.service.GemService;
 import lombok.NoArgsConstructor;
-
 import org.hibernate.HibernateError;
 
 import java.util.List;

@@ -1,19 +1,17 @@
-package com.example.dao.daoImpl;
+package com.example.demo1.dao.daoImpl;
 
-import com.example.dao.GemDao;
-import com.example.entity.User;
-import com.example.sessionFactory.SessionFactoryImpl;
+import com.example.demo1.dao.GemDao;
+import com.example.demo1.entity.Gem;
+import com.example.demo1.sessionFactory.SessionFactoryImpl;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import com.example.entity.Gem;
-import org.hibernate.boot.jaxb.SourceType;
 import org.hibernate.query.Query;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.Collections;
 import java.util.List;
 
@@ -70,22 +68,62 @@ public class GemDaoImpl implements GemDao {
 
     @Override
     public List<Gem> showGem() {
-        List<Gem> gems = (List<Gem>) SessionFactoryImpl.getSessionFactory().openSession().createQuery("FROM Gem").list();
+        List<Gem> gems = null;
+        try {
+            Session session = SessionFactoryImpl.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Gem> cr = cb.createQuery(Gem.class);
+            Root<Gem> root = cr.from(Gem.class);
+            cr.select(root);
+            gems = session.createQuery(cr).getResultList();
+            tx.commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("Exception: " + e);
+        }
         return gems;
     }
 
     @Override
     public List<Gem> showSortedByPriceGem() {
-        List<Gem> gems = (List<Gem>) SessionFactoryImpl.getSessionFactory().openSession().createQuery("FROM Gem ORDER BY price").list();
+        List<Gem> gems = null;
+        try {
+            Session session = SessionFactoryImpl.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Gem> cr = cb.createQuery(Gem.class);
+            Root<Gem> root = cr.from(Gem.class);
+            cr.select(root);
+            cr.orderBy(cb.asc(root.get("price"))); // Сортировка по возрастанию цены
+            gems = session.createQuery(cr).getResultList();
+            tx.commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("Exception: " + e);
+        }
         return gems;
     }
 
     @Override
     public List<Gem> showSortedByWeightGem() {
-        List<Gem> gems = (List<Gem>) SessionFactoryImpl.getSessionFactory().openSession().createQuery("FROM Gem ORDER BY weight").list();
+        List<Gem> gems = null;
+        try {
+            Session session = SessionFactoryImpl.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Gem> cr = cb.createQuery(Gem.class);
+            Root<Gem> root = cr.from(Gem.class);
+            cr.select(root);
+            cr.orderBy(cb.asc(root.get("weight"))); // Сортировка по возрастанию веса
+            gems = session.createQuery(cr).getResultList();
+            tx.commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("Exception: " + e);
+        }
         return gems;
     }
-
     @Override
     public List<Gem> showDiapasonOpacityGem(double startOpacity, double endOpacity) {
         SessionFactory sessionFactory = SessionFactoryImpl.getSessionFactory();

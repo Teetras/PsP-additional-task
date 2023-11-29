@@ -1,15 +1,28 @@
 package com.example.demo1;
 
-import javafx.event.ActionEvent;
-
-import java.net.URL;
-import java.util.ResourceBundle;
+import com.example.demo1.MenuFunctions.MenuFunctions;
+import com.example.demo1.entity.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+@Getter
+@Setter
 public class AddStoneController {
+    private User user = null;
+    MenuFunctions menuFunctions = new MenuFunctions();
 
     @FXML
     private ResourceBundle resources;
@@ -29,6 +42,26 @@ public class AddStoneController {
     @FXML
     private TextField weightField1;
 
+    @FXML
+    void showNewPage(ActionEvent event, User user) {
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.hide();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/com/example/demo1/NecklaceView.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Parent root = loader.getRoot();
+        NecklaceController controller = loader.getController();
+        controller.setUser(user);
+        controller.initialize();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
+
 
 
     @FXML
@@ -46,11 +79,13 @@ public class AddStoneController {
         } else {
             try {
                 double weight = Double.parseDouble(weightText);
-                int transparency = Integer.parseInt(transparencyText);
+                double transparency = Double.parseDouble(transparencyText);
                 double value = Double.parseDouble(valueText);
 
-                // Логика добавления камня
-                // ...
+                if( menuFunctions.addGem(name, transparency, value , weight)){
+                  showNewPage(actionEvent, user);
+                }
+
             } catch (NumberFormatException e) {
                 showAlert("Ошибка", "Некорректный формат числа", Alert.AlertType.ERROR);
             }

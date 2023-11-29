@@ -1,12 +1,11 @@
-package com.example.entity;
+package com.example.demo1.entity;
 
-import com.example.entity.User;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -34,13 +33,11 @@ public class Necklace {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
-    @JoinTable(
-            name = "neck_gem",
-            joinColumns = @JoinColumn(name = "necklace_id"),
-            inverseJoinColumns = @JoinColumn(name = "gem_id")
-    )
-    private List<Gem> gems;
+
+    @OneToMany(mappedBy = "necklace",fetch = FetchType.EAGER)
+    private List<NecklaceGem> necklaceGems;
+
+
 
     // Геттеры и сеттеры
 

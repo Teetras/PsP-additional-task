@@ -1,9 +1,9 @@
 package com.example;
 
 
-import com.example.entity.User;
-import com.example.service.UserService;
-import com.example.service.serviceImpl.UserServiceImpl;
+import com.example.demo1.entity.User;
+import com.example.demo1.service.UserService;
+import com.example.demo1.service.serviceImpl.UserServiceImpl;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    private UserService userService = new UserServiceImpl();
+    UserService userService = new UserServiceImpl();
 
     public static void main(String[] args) {
         // Создаем пользователя
@@ -20,9 +20,15 @@ public class Main extends Application {
         user.setPassword("user");
         user.setRole("user");
 
+        User admin = new User();
+        admin.setLogin("admin");
+        admin.setPassword("admin");
+        admin.setRole("admin");
+
         // Сохраняем пользователя в базе данных или выполняем другие необходимые операции
         UserService userService = new UserServiceImpl();
         userService.addUser(user);
+        userService.addUser(admin);
 
         // Запускаем JavaFX-приложение
         launch(args);
