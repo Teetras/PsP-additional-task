@@ -33,13 +33,11 @@ public class Necklace {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
-    @JoinTable(
-            name = "neck_gem",
-            joinColumns = @JoinColumn(name = "necklace_id"),
-            inverseJoinColumns = @JoinColumn(name = "gem_id")
-    )
-    private List<Gem> gems;
+
+    @OneToMany(mappedBy = "necklace",fetch = FetchType.EAGER)
+    private List<NecklaceGem> necklaceGems;
+
+
 
     // Геттеры и сеттеры
 

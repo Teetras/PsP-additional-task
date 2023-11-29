@@ -64,8 +64,21 @@ public class NecklaceDaoImpl implements NecklaceDao {
 
     @Override
     public List<Necklace> showNecklace() {
-//        List<Necklace> necklaces= (List<Necklace>) SessionFactoryImpl.getSessionFactory().openSession().createQuery("FROM Necklace").list();
-        return null;
+        List<Necklace> tests = null;
+        try {
+            Session session = SessionFactoryImpl.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Necklace> cr = cb.createQuery(Necklace.class);
+            Root<Necklace> root = cr.from(Necklace.class);
+            cr.select(root);
+            tests = session.createQuery(cr).getResultList();
+            tx.commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("Exception: " + e);
+        }
+        return tests;
     }
 
     @Override

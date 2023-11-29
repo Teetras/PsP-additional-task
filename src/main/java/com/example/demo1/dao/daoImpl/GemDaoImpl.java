@@ -68,22 +68,62 @@ public class GemDaoImpl implements GemDao {
 
     @Override
     public List<Gem> showGem() {
-//        List<Gem> gems = (List<Gem>) SessionFactoryImpl.getSessionFactory().openSession().createQuery("FROM Gem").list();
-        return null;
+        List<Gem> gems = null;
+        try {
+            Session session = SessionFactoryImpl.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Gem> cr = cb.createQuery(Gem.class);
+            Root<Gem> root = cr.from(Gem.class);
+            cr.select(root);
+            gems = session.createQuery(cr).getResultList();
+            tx.commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("Exception: " + e);
+        }
+        return gems;
     }
 
     @Override
     public List<Gem> showSortedByPriceGem() {
-//        List<Gem> gems = (List<Gem>) SessionFactoryImpl.getSessionFactory().openSession().createQuery("FROM Gem ORDER BY price").list();
-        return null;
+        List<Gem> gems = null;
+        try {
+            Session session = SessionFactoryImpl.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Gem> cr = cb.createQuery(Gem.class);
+            Root<Gem> root = cr.from(Gem.class);
+            cr.select(root);
+            cr.orderBy(cb.asc(root.get("price"))); // Сортировка по возрастанию цены
+            gems = session.createQuery(cr).getResultList();
+            tx.commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("Exception: " + e);
+        }
+        return gems;
     }
 
     @Override
     public List<Gem> showSortedByWeightGem() {
-//        List<Gem> gems = (List<Gem>) SessionFactoryImpl.getSessionFactory().openSession().createQuery("FROM Gem ORDER BY weight").list();
-        return null;
+        List<Gem> gems = null;
+        try {
+            Session session = SessionFactoryImpl.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Gem> cr = cb.createQuery(Gem.class);
+            Root<Gem> root = cr.from(Gem.class);
+            cr.select(root);
+            cr.orderBy(cb.asc(root.get("weight"))); // Сортировка по возрастанию веса
+            gems = session.createQuery(cr).getResultList();
+            tx.commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("Exception: " + e);
+        }
+        return gems;
     }
-
     @Override
     public List<Gem> showDiapasonOpacityGem(double startOpacity, double endOpacity) {
         SessionFactory sessionFactory = SessionFactoryImpl.getSessionFactory();

@@ -1,8 +1,6 @@
 package com.example.demo1.sessionFactory;
 
-import com.example.demo1.entity.Gem;
-import com.example.demo1.entity.Necklace;
-import com.example.demo1.entity.User;
+import com.example.demo1.entity.*;
 import lombok.NoArgsConstructor;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -27,6 +25,8 @@ public class SessionFactoryImpl {
                 metadataSources.addAnnotatedClass(Gem.class);
                 metadataSources.addAnnotatedClass(Necklace.class);
                 metadataSources.addAnnotatedClass(User.class);
+                metadataSources.addAnnotatedClass(NecklaceGem.class);
+                metadataSources.addAnnotatedClass(NecklaceGemId.class);
 
                 // Создаем объект Metadata и строим SessionFactory
                 Metadata metadata = metadataSources.getMetadataBuilder().build();

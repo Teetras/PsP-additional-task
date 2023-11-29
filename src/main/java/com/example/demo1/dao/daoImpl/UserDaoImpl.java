@@ -79,8 +79,21 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> showUser() {
-//        List<User> user = (List<User>)SessionFactoryImpl.getSessionFactory().openSession().createQuery().list();
-     return null;
+        List<User> tests = null;
+        try {
+            Session session = SessionFactoryImpl.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<User> cr = cb.createQuery(User.class);
+            Root<User> root = cr.from(User.class);
+            cr.select(root);
+            tests = session.createQuery(cr).getResultList();
+            tx.commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("Exception: " + e);
+        }
+        return tests;
     }
 
     @Override

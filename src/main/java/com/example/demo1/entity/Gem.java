@@ -6,8 +6,6 @@
     import lombok.NoArgsConstructor;
     import lombok.Setter;
 
-    import java.util.List;
-
     @Entity
     @Table(name = "gems")
     @Getter
@@ -32,8 +30,11 @@
         @Column(name = "weight")
         private double weight;
 
-        @ManyToMany(mappedBy = "gems")
-        private List<Necklace> necklaces;
 
-
+        public Gem(String name,double value, double transparency ,double weight) {
+            this.name=name;
+            this.opacity=transparency;
+            this.price=value;
+            this.weight=weight;
+        }
     }
