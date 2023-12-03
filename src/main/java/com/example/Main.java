@@ -1,8 +1,11 @@
 package com.example;
 
 
+import com.example.demo1.entity.Gem;
 import com.example.demo1.entity.User;
+import com.example.demo1.service.GemService;
 import com.example.demo1.service.UserService;
+import com.example.demo1.service.serviceImpl.GemServiceImpl;
 import com.example.demo1.service.serviceImpl.UserServiceImpl;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +32,14 @@ public class Main extends Application {
         UserService userService = new UserServiceImpl();
         userService.addUser(user);
         userService.addUser(admin);
+        Gem gem = new Gem();
+        gem.setWeight(1);
+        gem.setName("Brilliant");
+        gem.setOpacity(0.5);
+        gem.setPrice(15000);
 
+        GemService gemService = new GemServiceImpl();
+        gemService.addGem(gem);
         // Запускаем JavaFX-приложение
         launch(args);
     }

@@ -10,6 +10,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
@@ -97,7 +100,7 @@ public class NecklaceController {
             showAlert("Ошибка", "Введите вес ожерелья", Alert.AlertType.ERROR);
         } else {
             try {
-                double weight = Double.parseDouble(weightText);
+                int weight = Integer.parseInt(weightText);
 
                 if (weight <= 0) {
                     showAlert("Ошибка", "Введите положительное значение веса ожерелья", Alert.AlertType.ERROR);
@@ -278,24 +281,55 @@ public class NecklaceController {
     void showNewPage(ActionEvent event) {
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.hide();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/example/demo1/addStone.fxml"));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
-        Parent root = loader.getRoot();
-        AddStoneController controller = loader.getController();
-        controller.setUser(user);
-        controller.initialize();
+        // Создание и настройка лоадера
+        ProgressIndicator loaderIndicator = new ProgressIndicator();
+        loaderIndicator.setProgress(-1);
+        StackPane loaderPane = new StackPane(loaderIndicator);
+        loaderPane.setStyle("-fx-background-color: rgba(255,251,251,0);");
+        Scene loaderScene = new Scene(loaderPane, 200, 200);
+        Stage loaderStage = new Stage();
+        loaderStage.initModality(Modality.APPLICATION_MODAL);
+        loaderStage.initOwner(currentStage);
+        loaderStage.setScene(loaderScene);
 
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.showAndWait();
+        // Запуск фонового потока для выполнения длительной операции
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                // Имитация длительной операции
+                Thread.sleep(2000);
+                return null;
+            }
+        };
+
+        // Показать лоадер и выполнить операцию в фоновом потоке
+        loaderStage.show();
+        Thread thread = new Thread(task);
+        thread.start();
+
+        // Ожидание завершения операции и отображение следующей страницы
+        task.setOnSucceeded(e -> {
+            loaderStage.hide(); // Скрыть лоадер после завершения операции
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/com/example/demo1/addStone.fxml"));
+            try {
+                loader.load();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            Parent root = loader.getRoot();
+            AddStoneController controller = loader.getController();
+            controller.setUser(user);
+            controller.initialize();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        });
     }
-
     @FXML
     void show_Gems(ActionEvent event) {
         conditionTable.set(true);
@@ -347,7 +381,7 @@ public class NecklaceController {
     private void showHelp(ActionEvent event) {
         String helpMessage = "Добро пожаловать в программу для работы с ожерельем!\n\n"
                 + "1. Введите вес ожерелья и нажмите кнопку 'Создать ожерелье'.\n"
-                + "2. Будет создано ожерелье из камней, с суммарным весом, равным заданному.\n"
+                + "2. Будет создано ожерелье из камней, с суммарным весом, равным заданному. Чтобы добавить ожерелье себе - кликните по нему 2 раза.\n"
                 + "3. Если на заданный вес невозможно подобрать ожерелье, будет показано сообщение об ошибке.\n"
                 + "4. Общая стоимость ожерелья будет отображена ниже списка камней.\n"
                 + "5. Используйте кнопки 'Сортировка по ценности' и 'Сортировка по весу' для сортировки камней ожерелья.\n"

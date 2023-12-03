@@ -62,7 +62,7 @@ public class MenuFunctions {
 
 
 
-    public boolean addGem(String name,double transparency,double value ,double weight) {
+    public boolean addGem(String name,double transparency,double value ,int weight) {
         boolean isAdded = false;
         try {
             Gem gem = new Gem(name, value,

@@ -28,6 +28,7 @@ public class NecklaceCreator {
 
                 // Проверяем, чтобы добавление камня не превысило целевой вес
                 if (currentWeight + randomGem.getWeight() <= targetWeight) {
+                    System.out.println(currentWeight);
                     // Добавляем камень в ожерелье
                     gems.add(randomGem);
 

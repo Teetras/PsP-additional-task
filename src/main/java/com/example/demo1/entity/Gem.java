@@ -28,10 +28,10 @@
         private double price;
 
         @Column(name = "weight")
-        private double weight;
+        private int weight;
 
 
-        public Gem(String name,double value, double transparency ,double weight) {
+        public Gem(String name,double value, double transparency ,int weight) {
             this.name=name;
             this.opacity=transparency;
             this.price=value;

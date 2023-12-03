@@ -119,8 +119,9 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User findUserByLogin(String login) {
         User user = null;
+        Session session = null;
         try {
-            Session session = SessionFactoryImpl.getSessionFactory().openSession();
+            session = SessionFactoryImpl.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<User> cr = cb.createQuery(User.class);
@@ -128,10 +129,12 @@ public class UserDaoImpl implements UserDao {
             cr.select(root).where(cb.equal(root.get("login"), login));
             user = session.createQuery(cr).getSingleResult();
             tx.commit();
-            session.close();
-        }
-        catch (NoClassDefFoundError e) {
+        } catch (NoClassDefFoundError e) {
             System.out.println("Exception: " + e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
         return user;
     }

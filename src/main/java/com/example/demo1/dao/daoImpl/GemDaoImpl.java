@@ -20,19 +20,34 @@ public class GemDaoImpl implements GemDao {
     @Override
     public boolean addGem(Gem gem) {
         boolean isAdded = false;
+        Session session = null;
         try {
-            Session session = SessionFactoryImpl.getSessionFactory().openSession();
+            session = SessionFactoryImpl.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
-            session.save(gem);
-            tx.commit();
-            session.close();
-            isAdded = true;
+
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Gem> cr = cb.createQuery(Gem.class);
+            Root<Gem> root = cr.from(Gem.class);
+            cr.select(root).where(cb.equal(root.get("name"), gem.getName()));
+            List<Gem> gems = session.createQuery(cr).getResultList();
+
+            if (gems.isEmpty()) {
+                session.save(gem);
+                tx.commit();
+                isAdded = true;
+            } else {
+                System.out.println("User with this login already exists.");
+            }
+
+
         } catch (Exception e) {
             System.out.println("Exception: " + e);
+        }finally {
+            session.close();
         }
+
         return isAdded;
     }
-
     @Override
     public boolean updateGem(Gem gem) {
         boolean isUpdated = false;
