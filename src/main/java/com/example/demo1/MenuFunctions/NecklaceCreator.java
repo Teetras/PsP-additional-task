@@ -12,7 +12,7 @@ import java.util.*;
 public class NecklaceCreator {
     GemService gemService=  new GemServiceImpl();
 
-    public List<Necklace> createNecklacesByWeight(double targetWeight, int numberOfNecklaces) {
+    public List<Necklace> createNecklacesByWeight(double targetWeight, int numberOfNecklaces) {//подбираем камни для создания ожерелья по весу
         List<Necklace> necklaces = new ArrayList<>();
         Random random = new Random();
 
@@ -92,7 +92,7 @@ public class NecklaceCreator {
         return result.toString();
     }
 
-    public Map<String, Integer> gemCounts(List<Gem> gems) {
+    public Map<String, Integer> gemCounts(List<Gem> gems) {//считаем количество дубликатов камней в ожерелье
         Map<String, Integer> gemCounts = new HashMap<>();
 
         for (Gem gem : gems) {
@@ -112,7 +112,7 @@ public class NecklaceCreator {
         return gemCounts;
     }
 
-    private double calculateTotalPrice(List<Gem> gems) {
+    private double calculateTotalPrice(List<Gem> gems) {//считаем стоимость ожелье
         double totalPrice = 0.0;
 
         for (Gem gem : gems) {

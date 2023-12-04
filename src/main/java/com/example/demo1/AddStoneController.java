@@ -55,7 +55,7 @@ public class AddStoneController {
         ProgressIndicator loaderIndicator = new ProgressIndicator();
         loaderIndicator.setProgress(-1);
         StackPane loaderPane = new StackPane(loaderIndicator);
-        loaderPane.setStyle("-fx-background-color: rgba(255,255,255,0);");
+        loaderPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
         Scene loaderScene = new Scene(loaderPane, 200, 200);
         Stage loaderStage = new Stage();
         loaderStage.initModality(Modality.APPLICATION_MODAL);
@@ -106,7 +106,7 @@ public class AddStoneController {
     void initialize() {
 
     }
-    public void addStone(ActionEvent actionEvent) {
+    public void addStone(ActionEvent actionEvent) {// Добавление камня и проверки на корректное ее создание
         String name = nameField.getText();
         String weightText = weightField1.getText();
         String transparencyText = transparencyField.getText();
@@ -117,11 +117,15 @@ public class AddStoneController {
         } else {
             try {
                 int weight = Integer.parseInt(weightText);
-                double transparency = Double.parseDouble(transparencyText);
-                double value = Double.parseDouble(valueText);
+                double transparency = Double.parseDouble(transparencyText.replace(",", "."));
+                double value = Double.parseDouble(valueText.replace(",", "."));
 
-                if( menuFunctions.addGem(name, transparency, value , weight)){
-                  showNewPage(actionEvent, user);
+                if (transparency < 0 || transparency >= 1) {
+                    showAlert("Ошибка", "Прозрачность должна быть в диапазоне от 0 до 1", Alert.AlertType.ERROR);
+                } else {
+                    if (menuFunctions.addGem(name, transparency, value, weight)) {
+                        showNewPage(actionEvent, user);
+                    }
                 }
 
             } catch (NumberFormatException e) {

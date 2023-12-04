@@ -4,7 +4,7 @@ import com.example.demo1.entity.User;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService {// операции для работы с юзером в бд
     boolean addUser(User user);
     boolean updateUser(User user);
     boolean deleteUser(int id);

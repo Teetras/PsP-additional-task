@@ -11,7 +11,7 @@ import org.hibernate.HibernateError;
 import java.util.List;
 
 @NoArgsConstructor
-public class NacklaceServiceImpl implements NecklaceService {
+public class NacklaceServiceImpl implements NecklaceService {// реализация функций интерфейса
     NecklaceDao necklaceDao = new NecklaceDaoImpl();
 
     @Override

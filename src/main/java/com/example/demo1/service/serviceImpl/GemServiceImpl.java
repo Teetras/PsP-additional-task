@@ -11,7 +11,7 @@ import org.hibernate.HibernateError;
 import java.util.List;
 
 @NoArgsConstructor
-public class GemServiceImpl implements GemService {
+public class GemServiceImpl implements GemService {// реализация функций интерфейса
     GemDao gemDao = new GemDaoImpl();
     @Override
     public boolean addGem(Gem gem) {

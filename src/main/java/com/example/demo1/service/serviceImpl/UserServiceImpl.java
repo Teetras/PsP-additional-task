@@ -11,7 +11,7 @@ import org.hibernate.HibernateError;
 import java.util.List;
 
 @NoArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {// реализация функций интерфейса
     UserDao userDao = new UserDaoImpl();
 
     @Override

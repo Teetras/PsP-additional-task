@@ -92,7 +92,7 @@ public class NecklaceController {
     private TextField weightField;
 
     @FXML
-    void createNecklace(ActionEvent event) {
+    void createNecklace(ActionEvent event) {// Создание ожерелья, поск подходящих камней, добавление их пользователю
         String weightText = weightField.getText();
         final ChangeListener<Necklace>[] listener = new ChangeListener[]{null}; // Create a final array to hold the listener
 
@@ -182,7 +182,7 @@ public class NecklaceController {
         alert.showAndWait();
     }
 
-    @FXML
+    @FXML// Поиск подходящих камней по диапазону прозрачности
     void findStonesByTransparency(ActionEvent event) {
         String maxText = transparencyMaxField.getText();
         String minText = transparencyMinField.getText();
@@ -192,11 +192,11 @@ public class NecklaceController {
             showAlert("Ошибка", "Заполните оба поля диапазона", Alert.AlertType.ERROR);
         } else {
             try {
-                int maxTransparency = Integer.parseInt(maxText);
-                int minTransparency = Integer.parseInt(minText);
+                double maxTransparency = Double.parseDouble(maxText.replace(",", "."));
+                double minTransparency = Double.parseDouble(minText.replace(",", "."));
 
-                if (maxTransparency < 0 || minTransparency < 0) {
-                    showAlert("Ошибка", "Введите положительные значения", Alert.AlertType.ERROR);
+                if (maxTransparency < 0 || maxTransparency > 1 || minTransparency < 0 || minTransparency > 1) {
+                    showAlert("Ошибка", "Введите значения от 0 до 1", Alert.AlertType.ERROR);
                 } else if (maxTransparency < minTransparency) {
                     showAlert("Ошибка", "Максимальное значение должно быть больше или равно минимальному", Alert.AlertType.ERROR);
                 } else {
@@ -215,8 +215,6 @@ public class NecklaceController {
 
                     List<Gem> gems = menuFunctions.showDiapasonOpacityGem(minTransparency, maxTransparency);
                     table_gems.getItems().addAll(gems);
-
-
                 }
             } catch (NumberFormatException e) {
                 showAlert("Ошибка", "Некорректный формат числа", Alert.AlertType.ERROR);
@@ -247,7 +245,7 @@ public class NecklaceController {
     }
 
     @FXML
-    void sortByWeight(ActionEvent event) {
+    void sortByWeight(ActionEvent event) {// Сортировка по весу
         table_gems.getItems().clear();
 
         conditionTable.set(true);
@@ -275,10 +273,9 @@ public class NecklaceController {
     private BooleanProperty conditionNeckTable = new SimpleBooleanProperty();
 
     @FXML
-    private ListView<String> necklaceList; // Замените String на тип объектов, которые вы хотите отображать в ListView
-
+    private ListView<String> necklaceList;
     @FXML
-    void showNewPage(ActionEvent event) {
+    void showNewPage(ActionEvent event) {// Запуск нового окна
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.hide();
 
@@ -310,7 +307,7 @@ public class NecklaceController {
 
         // Ожидание завершения операции и отображение следующей страницы
         task.setOnSucceeded(e -> {
-            loaderStage.hide(); // Скрыть лоадер после завершения операции
+            loaderStage.hide(); // Скрытие лоадера после завершения операции
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/com/example/demo1/addStone.fxml"));
@@ -331,7 +328,7 @@ public class NecklaceController {
         });
     }
     @FXML
-    void show_Gems(ActionEvent event) {
+    void show_Gems(ActionEvent event) {// Отображение имеющихся камней в таблицу
         conditionTable.set(true);
         conditionNeckTable.set(false);
 
@@ -346,7 +343,7 @@ public class NecklaceController {
         List<Gem> gems = menuFunctions.showGem();
         table_gems.getItems().addAll(gems);
 
-        // Добавляем слушатель события выбора элемента в таблице
+
 
     }
 
@@ -357,11 +354,7 @@ public class NecklaceController {
         table_gems.visibleProperty().bind(conditionTable);
         necklaceTable.visibleProperty().bind(conditionTable);
 
-
-
-
-
-        // Пример условия для определения видимости кнопки
+        // Пример условия для определения видимости кнопки, чтобы пользовательне мог добавить камень в магазин
         if (getUser() != null) {
             if (user.getRole().equals(ADMIN_CHECK)) {
                 condition.set(true);
@@ -373,15 +366,15 @@ public class NecklaceController {
         }
         // Привязка свойства visible кнопки к свойству condition
         add.visibleProperty().bind(condition);
-        ;
-        // Пример добавления объектов в ListView при инициализации контроллера
+
+
     }
 
     @FXML
-    private void showHelp(ActionEvent event) {
+    private void showHelp(ActionEvent event) {//вывод справочного окна и его содержание
         String helpMessage = "Добро пожаловать в программу для работы с ожерельем!\n\n"
                 + "1. Введите вес ожерелья и нажмите кнопку 'Создать ожерелье'.\n"
-                + "2. Будет создано ожерелье из камней, с суммарным весом, равным заданному. Чтобы добавить ожерелье себе - кликните по нему 2 раза.\n"
+                + "2. Будет создано ожерелье из камней, с суммарным весом, равным заданному. Чтобы добавить ожерелье себе.\n"
                 + "3. Если на заданный вес невозможно подобрать ожерелье, будет показано сообщение об ошибке.\n"
                 + "4. Общая стоимость ожерелья будет отображена ниже списка камней.\n"
                 + "5. Используйте кнопки 'Сортировка по ценности' и 'Сортировка по весу' для сортировки камней ожерелья.\n"

@@ -3,7 +3,7 @@ import com.example.demo1.entity.Gem;
 
 import java.util.List;
 
-public interface GemService {
+public interface GemService {//интерфейс содержащий необходимые функции для проведения операций над объектом камня в бд
     boolean addGem(Gem gem);
     boolean updateGem(Gem gem);
     boolean deleteGem(int id);

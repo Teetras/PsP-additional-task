@@ -2,6 +2,7 @@ package com.example.demo1;
 
 import com.example.demo1.MenuFunctions.MenuFunctions;
 import com.example.demo1.entity.User;
+import jakarta.persistence.NoResultException;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,7 +37,7 @@ public class LoginController {
     @FXML
     private TextField usernameField;
 
-    void showNewPage(ActionEvent event, User user) {
+    void showNewPage(ActionEvent event, User user) {//Открытие нового окна
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.hide();
 
@@ -88,7 +89,7 @@ public class LoginController {
     }
 
     @FXML
-    void onLoginButtonClick(ActionEvent event) {
+    void onLoginButtonClick(ActionEvent event) {//Авторизация проверка корректности данных
         String username = usernameField.getText();
         String password = passwordField.getText();
         if (username.isEmpty() || password.isEmpty()) {
@@ -105,6 +106,8 @@ public class LoginController {
                         showAlert("Ошибка", "Неправильный логин или пароль", Alert.AlertType.ERROR);
                     }
                 }
+            } catch (NoResultException e) {
+                showAlert("Ошибка", "Неправильный логин или пароль", Alert.AlertType.ERROR);
             } catch (Exception e) {
                 e.printStackTrace();
             }

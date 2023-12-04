@@ -11,7 +11,7 @@ import org.hibernate.cfg.Configuration;
 @NoArgsConstructor
 public class SessionFactoryImpl {
     private static SessionFactory sessionFactory;
-    public static SessionFactory getSessionFactory() {
+    public static SessionFactory getSessionFactory() {//
         if (sessionFactory == null) {
             try {
                 // Создаем объект Configuration и загружаем настройки из файла hibernate.cfg.xml

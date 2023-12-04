@@ -4,7 +4,7 @@ import com.example.demo1.entity.Necklace;
 
 import java.util.List;
 
-public interface NecklaceService {
+public interface NecklaceService {//
     boolean addNecklace(Necklace necklace);
     boolean updateNecklace(Necklace necklace);
     boolean deleteNecklace(int id);
